@@ -74,11 +74,7 @@
 #endif
 
 #if HAVE_X11_XLIB_H
-#ifdef __APPLE__
-	#include <Xlib.h>
-#else
 	#include <X11/Xlib.h>
-#endif
 #endif
 
 namespace std {
