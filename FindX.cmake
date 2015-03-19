@@ -14,6 +14,10 @@ if(NOT X_FOUND)
   find_path(X_INCLUDE_DIRS X11/Xlib.h PATHS /usr/X11)
   find_library(X_LIBRARIES X11 PATHS /usr/X11/lib)
 endif()
+if(APPLE)
+  set(X_INCLUDE_DIRS ${X_INCLUDE_DIRS}/..)
+endif()
+
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(X DEFAULT_MSG X_INCLUDE_DIRS X_LIBRARIES)
