@@ -45,6 +45,11 @@ if(DEPENDS_PATH)
     set(configure_start CONFIG_SITE=${DEPENDS_PATH}/share/config.site ${configure_start})
   endif()
 endif()
+if(APPLE)
+  set(EXTRA_FLAGS "CFLAGS=${CMAKE_C_FLAGS} -fPIC -isystem${KODI_INCLUDE_DIR}" "CXXFLAGS=${CMAKE_CXX_FLAGS} -fPIC -isystem${KODI_INCLUDE_DIR}")
+else()
+  set(EXTRA_FLAGS "CFLAGS=${CMAKE_C_FLAGS} -fPIC -I${KODI_INCLUDE_DIR}" "CXXFLAGS=${CMAKE_CXX_FLAGS} -fPIC -I${KODI_INCLUDE_DIR}")
+endif()
 externalproject_add(rsxs SOURCE_DIR ${PROJECT_SOURCE_DIR}/${rsxs_dir}
                     CONFIGURE_COMMAND ${configure_start}
                                       --prefix=<INSTALL_DIR>
@@ -64,7 +69,7 @@ externalproject_add(rsxs SOURCE_DIR ${PROJECT_SOURCE_DIR}/${rsxs_dir}
                                       --x-includes=${X_INCLUDE_DIRS}
                                       --x-libraries=${X_LIBRARIES}
                                       ${PNG_PATH}
-                                      "CFLAGS=${CMAKE_C_FLAGS} -fPIC -I${KODI_INCLUDE_DIR}" "CXXFLAGS=${CMAKE_CXX_FLAGS} -fPIC -I${KODI_INCLUDE_DIR}"
+                                      ${EXTRA_FLAGS}
                                       "CPPFLAGS=-Dpng_set_gray_1_2_4_to_8=png_set_expand_gray_1_2_4_to_8"
                                       "LIBS=${ZLIB_LIBRARIES}"
                     BUILD_COMMAND ${MAKE}
