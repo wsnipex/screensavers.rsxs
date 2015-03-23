@@ -350,6 +350,7 @@ void Common::fini() {
 
 /* See http://www.mesa3d.org/brianp/sig97/glxport.htm */
 Colormap Common::getColormap() {
+/*
 	if (visualInfo->visual == DefaultVisual(display, screen))
 		return DefaultColormap(display, screen);
 
@@ -402,9 +403,12 @@ Colormap Common::getColormap() {
 
 	return XCreateColormap(display, RootWindow(display, screen),
 		visualInfo->visual, AllocNone);
+*/
+return 0;
 }
 
 Window Common::createWindow(int argc, char** argv) {
+/*
 	Window window = 0;
 	
 	if (_onRoot || _windowID) {
@@ -594,6 +598,8 @@ Window Common::createWindow(int argc, char** argv) {
 	}
 
 	return window;
+*/
+return 0;
 }
 
 void Common::updateAttributes() {
