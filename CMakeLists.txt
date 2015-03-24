@@ -7,13 +7,21 @@ enable_language(CXX)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR})
 
 find_package(kodi REQUIRED)
-find_package(OpenGL REQUIRED)
 find_package(PNG REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(X REQUIRED)
 
 set(rsxs_dir lib/rsxs-1.0)
 
+if(APPLE)
+  #set(OPENGL_LIBRARIES "/opt/X11/lib/libX11.dylib /opt/X11/lib/libGL.dylib /opt/X11/lib/libGLU.dylib /opt/X11/lib/libGL.dylib /opt/X11/lib/libGLU.dylib")
+  set(OPENGL_LIBRARIES "-L/opt/X11/lib -lX11 -lGL -lGLU")
+  set(OpenGL_INCLUDE_DIR "/opt/X11/include")
+  set(EXTRA_FLAGS "CFLAGS=${CMAKE_C_FLAGS} -fPIC -isystem${DEPENDS_PATH}/include -isystem${X_INCLUDE_DIRS} -isystem${KODI_INCLUDE_DIR}" "CXXFLAGS=${CMAKE_CXX_FLAGS} -fPIC -isystem${DEPENDS_PATH}/include -isystem${X_INCLUDE_DIRS} -isystem${KODI_INCLUDE_DIR}")
+else()
+  find_package(OpenGL REQUIRED)
+  set(EXTRA_FLAGS "CFLAGS=${CMAKE_C_FLAGS} -fPIC -I${KODI_INCLUDE_DIR}" "CXXFLAGS=${CMAKE_CXX_FLAGS} -fPIC -I${KODI_INCLUDE_DIR}")
+endif()
 include_directories(${OpenGL_INCLUDE_DIR}
                     ${PNG_INCLUDE_DIR}
                     ${KODI_INCLUDE_DIR}
@@ -44,11 +52,6 @@ if(DEPENDS_PATH)
   if(EXISTS ${DEPENDS_PATH}/share/config.site)
     set(configure_start CONFIG_SITE=${DEPENDS_PATH}/share/config.site ${configure_start})
   endif()
-endif()
-if(APPLE)
-  set(EXTRA_FLAGS "CFLAGS=${CMAKE_C_FLAGS} -fPIC -isystem${DEPENDS_PATH}/include -isystem${X_INCLUDE_DIRS} -isystem${KODI_INCLUDE_DIR}" "CXXFLAGS=${CMAKE_CXX_FLAGS} -fPIC -isystem${DEPENDS_PATH}/include -isystem${X_INCLUDE_DIRS} -isystem${KODI_INCLUDE_DIR}")
-else()
-  set(EXTRA_FLAGS "CFLAGS=${CMAKE_C_FLAGS} -fPIC -I${KODI_INCLUDE_DIR}" "CXXFLAGS=${CMAKE_CXX_FLAGS} -fPIC -I${KODI_INCLUDE_DIR}")
 endif()
 externalproject_add(rsxs SOURCE_DIR ${PROJECT_SOURCE_DIR}/${rsxs_dir}
                     CONFIGURE_COMMAND ${configure_start}
@@ -159,6 +162,7 @@ set(DEPLIBS ${OPENGL_LIBRARIES}
             ${CMAKE_BINARY_DIR}/rsxs-prefix/src/rsxs-build/lib/libmisc.a
             rsxs_common)
 
+#message(FATAL_ERROR "OPENGL_LIBARARIES: ${OPENGL_LIBRARIES} - DEPLIBS: ${DEPLIBS}")
 foreach(addon solarwinds plasma euphoria flocks flux cyclone fieldlines helios
               hyperspace lattice skyrocket)
   string(TOUPPER ${addon} ADDON)
