@@ -1702,6 +1702,7 @@ Try `%s --help' or `%s --usage' for more information.\n"),
     /* Print any documentation strings at the end.  */
     anything |= argp_doc (argp, state, 1, anything, 0, fs);
 
+  /*
   if ((flags & ARGP_HELP_BUG_ADDR) && argp_program_bug_address)
     {
       if (anything)
@@ -1710,7 +1711,7 @@ Try `%s --help' or `%s --usage' for more information.\n"),
 					     "Report bugs to %s.\n"),
  			       argp_program_bug_address);
       anything = 1;
-    }
+    } */
 
 #if _LIBC || (HAVE_FLOCKFILE && HAVE_FUNLOCKFILE)
   __funlockfile (stream);

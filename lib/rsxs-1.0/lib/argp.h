@@ -458,7 +458,7 @@ extern void (*argp_program_version_hook) (FILE *__restrict __stream,
    argp_help if the ARGP_HELP_BUG_ADDR flag is set (as it is by various
    standard help messages), embedded in a sentence that says something like
    `Report bugs to ADDR.'.  */
-extern const char *argp_program_bug_address;
+/* extern const char *argp_program_bug_address; */
 
 /* The exit status that argp will use when exiting due to a parsing error.
    If not defined or set by the user program, this defaults to EX_USAGE from

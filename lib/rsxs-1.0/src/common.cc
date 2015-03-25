@@ -145,7 +145,7 @@ error_t Common::parse(int key, char* arg, struct argp_state* state) {
 		else if (std::sscanf(arg, "%d%d", &_x, &_y) == 2)
 			_useOffset = true;
 		else {
-			argp_error(state, "could not parse geometry `%s'", arg);
+			/* argp_error(state, "could not parse geometry `%s'", arg); */
 			return ARGP_ERR_UNKNOWN;
 		}
 		return 0;
@@ -154,7 +154,7 @@ error_t Common::parse(int key, char* arg, struct argp_state* state) {
 		return 0;
 	case ARG_WINDOWID:
 		if ((_windowID = std::strtol(arg, NULL, 0)) == 0) {
-			argp_error(state, "invalid window ID `%s'", arg);
+			/* argp_error(state, "invalid window ID `%s'", arg); */
 			return ARGP_ERR_UNKNOWN;
 		}
 		return 0;
@@ -641,8 +641,8 @@ int main(int argc, char** argv) {
 
 	Common::program = argv[0];
 	program_name = Hack::getShortName().c_str();
-	argp_program_version = PACKAGE_STRING;
-	argp_program_bug_address = "<" PACKAGE_BUGREPORT ">";
+	/* argp_program_version = PACKAGE_STRING; */
+	/* argp_program_bug_address = "<" PACKAGE_BUGREPORT ">"; */
 	struct argp_option options[] = {
 		{ NULL, 0, NULL, 0, "Help options:", -1 },
 		{ NULL, 0, NULL, 0, "Common options:" },
